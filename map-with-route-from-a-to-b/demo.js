@@ -8,6 +8,17 @@
  *
  * @param   {H.service.Platform} platform    A stub class to access HERE services
  */
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
 function calculateRouteFromAtoB (platform) {
   var router = platform.getRoutingService(),
     routeRequestParams = {
@@ -16,7 +27,8 @@ function calculateRouteFromAtoB (platform) {
       routeattributes : 'waypoints,summary,shape,legs',
       maneuverattributes: 'direction,action',
       waypoint0: '52.5160,13.3779', // Brandenburg Gate
-      waypoint1: '52.5206,13.3862'  // Friedrichstraße Railway Station
+      waypoint1: '52.5206,13.3862',
+      waypoint2: '52.5210,13.3855// Friedrichstraße Railway Station
     };
 
 
